@@ -1,6 +1,7 @@
 import { Team } from '../model/team';
 import { TeamsService } from './teams.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Observable } from 'rxjs';
 
@@ -38,17 +39,24 @@ export class TeamsComponent implements OnInit {
   };
   
   teams: Team[];
-  teams$: Observable<Team[]>;
+//  teams$: Observable<Team[]>;
   
   datasource: LocalDataSource;
   
-  constructor(private teamService: TeamsService) { }
+  constructor(private teamService: TeamsService,
+              private router: Router) { }
 
   ngOnInit() {
-    this.teamService.getTeams().subscribe(data => {
+    this.teamService.teams$.subscribe(data => {
      this.teams = data;
       this.datasource = new LocalDataSource(data);
+      console.debug('TeamsDS: ', this.datasource);
     });
+  }
+  
+  viewTeam(team){
+    console.log('viewTeam: ', team.data);
+    this.router.navigate(['/teams/' + team.data.shortName]);
   }
 
 }

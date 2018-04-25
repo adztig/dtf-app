@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {path: 'teams', component: TeamsComponent},
-  {path: 'teams/:id', component: TeamsDetailComponent}
+  {path: 'teams/:teamid', component: TeamsDetailComponent}
 ];
 
 @NgModule({
